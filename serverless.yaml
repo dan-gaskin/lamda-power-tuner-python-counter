@@ -1,0 +1,15 @@
+service:
+  name: python-counter
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: eu-west-1
+
+package:
+  individually: true
+
+functions:
+  python-counter:
+    handler: src/index.handler
+    timout: 900
