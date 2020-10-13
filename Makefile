@@ -3,6 +3,15 @@ SOURCE_LOCATION = ~/.bashrc
 DOCKER_SERVERLESS = softinstigate/serverless
 APP_DIR = /deploy
 AWS_PROFILE = dg
+AWS_ACCOUNT = 407674206889
+AWS_REGION = eu-west-1
+
+POWER_VALUES = ALL
+NUM = 30
+COUNT_NUMBER = 1000000
+PARRLLEL = true
+STRATEGY = cost
+LAMBDA_NAME := docker run -v ~/.aws:/root/.aws amazon/aws-cli cloudformation describe-stack-resources --stack-name python-counter-dev --query 'StackResources\[?LogicalResourceId==\`PythonDashcounterLambdaFunction\`\].PhysicalResourceId' --output text --profile $(AWS_PROFILE)
 
 .ONESHELL:
 
@@ -14,6 +23,10 @@ app:
 
 powertuner: 
 	$(shell cd aws-lambda-power-tuning && ./scripts/deploy.sh)
+
+config:
+	$(shell echo $(LAMBDA_NAME))
+	# $(shell aws-lambda-power-tuning/scripts/generate-config.sh arn:aws:lambda:$(AWS_REGION):$(AWS_ACCOUNT):function:$(LAMBDA_NAME) $(POWER_VALUES) $(NUM) $(COUNT_NUMBER) $(PARRLLEL) $(STRATEGY))
 
 run: 
 	$(shell cd aws-lambda-power-tuning && ./scripts/execute.sh)
