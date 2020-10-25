@@ -18,11 +18,10 @@ export AWS_REGION=
 Make auth is run to login to AWS. Please update Makefile with appropriate credentials
 
 `make app`
-Make app is used to deploy the python lambda that we will be testing with the AWS Lambda Power Tuner app
+Make app is used to deploy the python lambda that we will be testing with the AWS Lambda Power Tuner app. This is deployed using the serverless framework
 
 `make config`
 Make config creates the config file used by AWS Lambda Power Tuner.
-
 The output can be found at `./cicd/scipts/execution-input.json`
 
 `make powertuner`
