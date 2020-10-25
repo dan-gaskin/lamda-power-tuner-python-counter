@@ -16,18 +16,15 @@ LAMBDA_NAME := docker run -v ~/.aws:/root/.aws amazon/aws-cli cloudformation des
 .ONESHELL:
 
 auth:
-	$(shell source $(SOURCE_LOCATION) && gsts --aws-role-arn $(AWS_ROLE) --aws-profile contino-sso-sts)
+	$(shell source $(SOURCE_LOCATION) && gsts --aws-role-arn $(AWS_ROLE) --profile contino-sso-sts)
 
 app:
 	docker run -v ~/.aws:/root/.aws -v $(shell pwd):$(APP_DIR) -w $(APP_DIR) -e AWS_PROFILE=$(AWS_PROFILE) $(DOCKER_SERVERLESS) deploy
 
-powertuner: 
-	$(shell cd aws-lambda-power-tuning && ./scripts/deploy.sh)
-
 config:
-	$(shell aws-lambda-power-tuning/scripts/generate-config.sh arn:aws:lambda:$(AWS_REGION):$(AWS_ACCOUNT):function:$(shell $(LAMBDA_NAME)) $(POWER_VALUES) $(NUM) $(COUNT_NUMBER) $(PARRLLEL) $(STRATEGY))
+	$(shell ./cicd/scripts/generate-config.sh arn:aws:lambda:$(AWS_REGION):$(AWS_ACCOUNT):function:$(shell $(LAMBDA_NAME)) $(POWER_VALUES) $(NUM) $(COUNT_NUMBER) $(PARRLLEL) $(STRATEGY))
 
-run: 
-	$(shell cd aws-lambda-power-tuning && ./scripts/execute.sh)
+powertuner: 
+	$(shell ./cicd/scripts/execute.sh)
 
 

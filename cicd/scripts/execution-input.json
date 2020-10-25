@@ -1,0 +1,8 @@
+{
+    "lambdaARN": "arn:aws:lambda:eu-west-1:407674206889:function:python-counter-dev-python-counter",
+    "powerValues": "ALL",
+    "num": 30,
+    "payload": {"count":1000000},
+    "parallelInvocation": true,
+    "strategy": "cost"
+}
