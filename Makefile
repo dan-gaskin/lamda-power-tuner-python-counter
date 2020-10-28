@@ -1,4 +1,4 @@
-AWS_ROLE = arn:aws:iam::443332089211:role/daniel-gaskin-account
+AWS_ROLE = "arn:aws:iam::443332089211:role/daniel-gaskin-account"
 SOURCE_LOCATION = ~/.bashrc
 DOCKER_SERVERLESS = softinstigate/serverless
 APP_DIR = /deploy
@@ -12,8 +12,6 @@ COUNT_NUMBER = 1000000
 PARRLLEL = true
 STRATEGY = cost
 LAMBDA_NAME := docker run -v ~/.aws:/root/.aws amazon/aws-cli cloudformation describe-stack-resources --stack-name python-counter-dev --query 'StackResources[?LogicalResourceId==`PythonDashcounterLambdaFunction`].PhysicalResourceId' --output text --profile $(AWS_PROFILE)
-
-.ONESHELL:
 
 auth:
 	$(shell source $(SOURCE_LOCATION) && gsts --aws-role-arn $(AWS_ROLE) --profile contino-sso-sts)
